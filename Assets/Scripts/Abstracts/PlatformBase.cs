@@ -10,7 +10,7 @@ public abstract class PlatformBase : MonoBehaviour
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
-            Debug.Log("zýplama üst sýnýftan geldi");
+            //Debug.Log("zýplama üst sýnýftan geldi");
         }
     }
 
