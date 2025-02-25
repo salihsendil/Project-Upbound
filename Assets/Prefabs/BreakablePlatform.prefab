@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6902070101735062057}
   - component: {fileID: 2234577601535619501}
   - component: {fileID: 6155511787894849453}
-  - component: {fileID: 1241610237622767677}
+  - component: {fileID: 2721400207522590344}
   m_Layer: 0
-  m_Name: SimplePlatform
+  m_Name: BreakablePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ab30a5ba8bf22d24686375e484b073e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d58df5b5e36ba884f9c288a3020d48af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -155,7 +155,7 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
---- !u!114 &1241610237622767677
+--- !u!114 &2721400207522590344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,6 +164,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7355579088295367764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2e62eb94e355db4dacbae445592af3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d2828ec84f60324390af35c103cdfb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

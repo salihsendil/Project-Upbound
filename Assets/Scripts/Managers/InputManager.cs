@@ -33,7 +33,6 @@ public class InputManager : MonoBehaviour
     private void Move(InputAction.CallbackContext callback)
     {
         _touchInput = callback.ReadValue<Vector2>();
-        Debug.Log(_touchInput);
     }
 
     private void OnEnable()
