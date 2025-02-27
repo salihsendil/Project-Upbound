@@ -1,99 +1,108 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlatformType { SimplePlatform, BreakablePlatform, OneJumpPlatform, MovingOnXPlatform }
+
 public class PlatformManager : MonoBehaviour
 {
-    private const int MAX_PLATFROM_COUNT = 15;
-
-
-
-    [SerializeField] private List<GameObject> _prefabList = new List<GameObject>();
+    [Header("Lists")]
     [SerializeField] private Queue<GameObject> _activePlatforms = new Queue<GameObject>();
-    [SerializeField] private float _lastPlatformYPosition = -1f;
-    [SerializeField] private float _spawnPlatformOffset = 6f;
-    [SerializeField] private Vector2 _startPoint = Vector2.zero;
-    [SerializeField] private float _spawnXMin = -2.5f;
-    [SerializeField] private float _spawnXMax = 2.5f;
-    [SerializeField] private float _spawnYMin = 0.4f;
-    [SerializeField] private float _spawnYMax = 1f;
 
-    [SerializeField] private int _totalPlatformCounter = 0;
+    [Header("References")]
+    private PlayerController _player;
+    private PlatformObjectPooling _pool;
+    private PlatformSpawner _platformSpawner;
+    private DifficultyManager _difficultyManager;
 
-    private void Awake()
+    [Header("Platform Properties")]
+    [SerializeField] private float _spawnPlatformOffset = 7.5f;
+
+    [Header("Difficulty")]
+    [SerializeField] private PlatformType _platformType = PlatformType.SimplePlatform;
+    [SerializeField] private float _perlinNoiseValue;
+
+    private void Start()
     {
-        for (int i = 0; i < MAX_PLATFROM_COUNT; i++)
-        {
-            if (i == 7 || i == 5 || i == 10 || i==12||i==14)
-            {
-                GameObject obj = Instantiate(_prefabList[1], transform.position, Quaternion.identity);
-                obj.transform.position = _totalPlatformCounter == 0 ? _startPoint : GenerateRandomPosition() + _startPoint;
-                SetLastPlatformYPosition(obj.transform.position);
-                _activePlatforms.Enqueue(obj);
-                _totalPlatformCounter++;
-            }
-            else
-            {
-                SpawnPlatform();
+        _player = PlayerController.Instance;
+        _pool = FindFirstObjectByType<PlatformObjectPooling>();
+        _platformSpawner = FindFirstObjectByType<PlatformSpawner>();
+        _difficultyManager = new DifficultyManager();
 
+        if (_platformSpawner != null && _pool != null)
+        {
+            for (int i = 0; i < _pool.PoolSize; i++)
+            {
+                _activePlatforms.Enqueue(_platformSpawner.SpawnPlatform(_platformType));
             }
         }
-    }
-
-    void Start()
-    {
-
     }
 
     void Update()
     {
+        HandlePlatformSpawning();
+    }
 
-        if (CheckPlayerPos() && CheckPlatformAtMaxCount())
+    private void HandlePlatformSpawning()
+    {
+        if (IsPlayerCloseEnoughToHighestPlatform() /*&& CheckPlatformAtMaxCount()*/)
         {
-            SpawnPlatform();
             DeletePlatform();
+            SetPlatformType();
+            _activePlatforms.Enqueue(_platformSpawner.SpawnPlatform(_platformType));
         }
-
-        Debug.Log(_activePlatforms.Count);
     }
 
-    private void SpawnPlatform()
+    /// <summary>
+    /// Perlin Noise deðerine göre platform türünü belirler. (Güncellenecek!)
+    /// </summary>
+    private void SetPlatformType()
     {
-        GameObject obj = Instantiate(_prefabList[0], transform.position, Quaternion.identity);
-        obj.transform.position = _totalPlatformCounter == 0 ? _startPoint : GenerateRandomPosition() + _startPoint;
-        SetLastPlatformYPosition(obj.transform.position);
-        _activePlatforms.Enqueue(obj);
-        _totalPlatformCounter++;
-    }
+        _perlinNoiseValue = _difficultyManager.PlatformTypePerlinNoise(Time.time, _platformSpawner.HighestPlatformYPosition);
 
-    private bool CheckPlatformAtMaxCount()
-    {
-        return _activePlatforms.Count <= MAX_PLATFROM_COUNT;
-    }
-
-    private bool CheckPlayerPos()
-    {
-        return _lastPlatformYPosition - PlayerController.Instance.transform.position.y < _spawnPlatformOffset;
-    }
-
-    private void SetLastPlatformYPosition(Vector3 platformPos)
-    {
-        if (platformPos.y > _lastPlatformYPosition)
+        if (_perlinNoiseValue > 0 && _perlinNoiseValue < 25)
         {
-            _lastPlatformYPosition = platformPos.y;
+            _platformType = PlatformType.OneJumpPlatform;
+        }
+
+        else if (_perlinNoiseValue > 25 && _perlinNoiseValue < 60)
+        {
+            _platformType = PlatformType.SimplePlatform;
+        }
+
+        else if (_perlinNoiseValue > 60 && _perlinNoiseValue < 70)
+        {
+            _platformType = PlatformType.BreakablePlatform;
+        }
+
+        else if (_perlinNoiseValue > 70 && _perlinNoiseValue < 100)
+        {
+            _platformType = PlatformType.MovingOnXPlatform;
         }
     }
 
+    /// <summary>
+    /// En alttaki platformu kuyruktan çýkarýr ve siler.
+    /// </summary>
     private void DeletePlatform()
     {
-        Destroy(_activePlatforms.Dequeue());
+        GameObject obj = _activePlatforms.Dequeue();
+        if (obj.GetComponent<SimplePlatform>())
+        {
+            _pool.ReturnPlatformToPool(obj);
+        }
+        else
+        {
+            Destroy(obj);
+        }
     }
 
-    private Vector2 GenerateRandomPosition()
+    /// <summary>
+    /// En üstteki platform ile karakter arasýndaki mesafeyi ölçer.
+    /// </summary>
+    /// <returns>En yukardaki platform ile karakter arasýndaki mesafe yeteri kadar kýsaysa true, yoksa false döndürür. </returns>
+    private bool IsPlayerCloseEnoughToHighestPlatform()
     {
-        float randomX = Random.Range(_spawnXMin, _spawnXMax);
-        //float randomY = Random.Range(_spawnYMin, _spawnYMax);
-        return new Vector2(randomX, _totalPlatformCounter * 1f);
+        return _platformSpawner.HighestPlatformYPosition - _player.transform.position.y < _spawnPlatformOffset;
     }
-
-
 }

@@ -3,21 +3,20 @@ using UnityEngine;
 
 public class PlatformObjectPooling : MonoBehaviour
 {
-    private const int POOL_SIZE = 20;
+    private const int POOL_SIZE = 25;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _simplePlatformPrefab;
-    [SerializeField] private GameObject _breakablePlatformPrefab;
 
-    [Header("Spawn Lucks")]
-    [SerializeField] private float _breakablePlatformLuck = 20f;
-
+    [Header("List")]
     [SerializeField] private Queue<GameObject> _platformList = new Queue<GameObject>();
 
+    public int PoolSize { get => POOL_SIZE; }
     public static PlatformObjectPooling Instance { get; private set; }
 
     private void Awake()
     {
+        FillThePool();
         #region SingletonPattern
         if (Instance != null && Instance != this)
         {
@@ -27,12 +26,6 @@ public class PlatformObjectPooling : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         #endregion
-
-    }
-
-    void Start()
-    {
-        FillThePool();
     }
 
     public GameObject GetPlatformFromPool()
@@ -64,22 +57,4 @@ public class PlatformObjectPooling : MonoBehaviour
             }
         }
     }
-
-    public void ReFillThePool()
-    {
-        if (GenerateRandomNumber() < _breakablePlatformLuck)
-        {
-            GameObject obj = GetPlatformFromPool();
-            Destroy(obj);
-            GameObject newObject = Instantiate(_breakablePlatformPrefab, transform.position, Quaternion.identity);
-            ReturnPlatformToPool(newObject);
-            
-        }
-    }
-
-    private float GenerateRandomNumber()
-    {
-        return UnityEngine.Random.Range(0, 100);
-    }
-
 }

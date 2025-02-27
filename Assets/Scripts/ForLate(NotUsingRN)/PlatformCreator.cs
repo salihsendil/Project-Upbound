@@ -52,7 +52,7 @@ public class PlatformCreator : MonoBehaviour
         GameObject obj = PlatformObjectPooling.Instance.GetPlatformFromPool();
         obj.transform.position = _startPoint + (index == 0 ? Vector3.zero : index * _blocksDistance + GenerateRandomPlatformPosition());
         _activeObjects.Add(obj);
-        PlatformObjectPooling.Instance.ReFillThePool();
+        //PlatformObjectPooling.Instance.ReFillThePool();
         _platformCounter++;
     }
 
