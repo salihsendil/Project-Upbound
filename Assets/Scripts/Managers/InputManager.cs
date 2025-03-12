@@ -11,20 +11,9 @@ public class InputManager : MonoBehaviour
 
     [Header("Getters - Setters")]
     public Vector2 TouchInput { get => _touchInput; }
-    public static InputManager Instance { get; private set; }
 
     private void Awake()
     {
-        #region SingletonPattern
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        #endregion
-
         _playerInput = new PlayerInput();
         _playerInput.Enable();
     }

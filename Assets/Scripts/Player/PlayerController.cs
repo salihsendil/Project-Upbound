@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
     private Rigidbody2D _rb;
-    private BoxCollider2D _jumpCollider;
+    private CapsuleCollider2D _jumpCollider;
+    [Inject] private InputManager _inputManager;
 
     [Header("Camera Variables")]
     private Camera _mainCam;
@@ -14,11 +16,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement Variables")]
     private Vector3 _worldPos;
-    [SerializeField] private float _speed = 10f;
+    [SerializeField] private float _speed = 3f;
     [SerializeField] private float _maxSpeed = 10f;
-
+    [SerializeField] private float _highestYPosition = 0f;
 
     public static PlayerController Instance { get; private set; }
+    public float HighestYPosition { get => _highestYPosition; }
 
     private void Awake()
     {
@@ -33,8 +36,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         _rb = GetComponent<Rigidbody2D>();
-        _jumpCollider = GetComponent<BoxCollider2D>();
-
+        _jumpCollider = GetComponent<CapsuleCollider2D>();
     }
 
 
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+        //input girdisi lerp ile yumuþatýlarak hem oyun zorlaþtýrýlsýn hem farklý bi tat kazandýrýlsýn
         LimitTheLinearVelocity();
         BlockMultipleJump();
 
@@ -55,9 +58,8 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayerOnX();
         }
+        SetHighestYPosition();
     }
-
-
 
     private void LimitTheLinearVelocity()
     {
@@ -71,19 +73,32 @@ public class PlayerController : MonoBehaviour
 
     private bool IsPressedScreen()
     {
-        return InputManager.Instance.TouchInput != Vector2.zero;
+        return _inputManager.TouchInput != Vector2.zero;
     }
 
     private void MovePlayerOnX()
     {
         _worldPos = _mainCam.ScreenToWorldPoint(new Vector3(
-                InputManager.Instance.TouchInput.x,
-                InputManager.Instance.TouchInput.y,
+                _inputManager.TouchInput.x,
+                _inputManager.TouchInput.y,
                 Camera.main.nearClipPlane));
 
         _worldPos.x = Mathf.Clamp(_worldPos.x, -_screenBound, _screenBound);
 
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, _worldPos.x, _speed * Time.deltaTime * _speed), transform.position.y, transform.position.z);
+    }
+
+    public void PlayerJump(float jumpForce)
+    {
+        _rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+    }
+
+    private void SetHighestYPosition()
+    {
+        if (transform.position.y > _highestYPosition)
+        {
+            _highestYPosition = transform.position.y;
+        }
     }
 
 }

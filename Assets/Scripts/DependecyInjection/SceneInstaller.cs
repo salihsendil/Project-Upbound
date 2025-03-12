@@ -1,0 +1,14 @@
+using Zenject;
+
+public class SceneInstaller : MonoInstaller
+{
+    public override void InstallBindings()
+    {
+        Container.Bind<InputManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PlayerController>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PlatformObjectPooling>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<StartManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PlatformSpawner>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<DifficultyManager>().AsSingle();
+    }
+}

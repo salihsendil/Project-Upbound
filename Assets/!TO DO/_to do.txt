@@ -1,0 +1,35 @@
+//Dependecy Injection
+
+//Enemy Spawn
+--Enemyler platformlarýn üstünde durmalý ve hareket etmemeli
+
+//Boost Spawn
+--Boostlar platlarýmlarýn üstünde durmalý ve platform'da enemy yoksa spawn olmalý
+
+//New Platforms
+--Zýplatan platform
+
+//Follow Cam Update
+--Kamera takip sistemi düzeltilmeli ve karakter saðdan ekrandan çýkýnca soldan tekrar ekrana girmeli
+
+//Coin Spawn
+--Menüden booster satýn almak için karakter coin toplayabilmeli
+
+//Ads 
+--Ekranýn altýna ads eklenmeli
+--Oyuncu ölünce ads izleyerek oyuna devam edebilmeli
+
+//Game Over 
+--Karakter ölüm ekraný ve ölüm durumu olmalý
+
+
+//Boosts
+--Platformlarýn üstünde yay çýksýn. Karakteri yükseðe fýrlatsýn.
+--Bir süreliðine zýplama gücünü artýrsýn. Ekrandaki timer bu süreyi göstersin.
+--Bir süreliðine skor çarpanýný 2x yapsýn. Ekrandaki timer bu süreyi göstersin.
+
+--Enemy eklenince shield veren bir tane daha power up ekleyebiliriz.
+
+
+//Chest spawn
+--Ýçinden kart çýkar. Seçilen özellik oyuna eklenir.
