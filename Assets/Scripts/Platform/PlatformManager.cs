@@ -17,7 +17,7 @@ public class PlatformManager : MonoBehaviour
     private DifficultyManager _difficultyManager;
 
     [Header("Platform Properties")]
-    [SerializeField] private float _spawnPlatformOffset = 7.5f;
+    [SerializeField] private float _spawnPlatformOffset = 6.5f;
     [SerializeField] private bool _hasBreakableSpawned = false;
 
     [Header("Difficulty")]
@@ -51,7 +51,7 @@ public class PlatformManager : MonoBehaviour
 
     private void HandlePlatformSpawning()
     {
-        if (IsPlayerCloseEnoughToHighestPlatform())
+        if (IsPlayerFarAwayFromLowestPlatform())
         {
             DeletePlatform();
             SetPlatformType();
@@ -115,11 +115,12 @@ public class PlatformManager : MonoBehaviour
     }
 
     /// <summary>
-    /// En üstteki platform ile karakter arasýndaki mesafeyi ölçer.
+    /// En alttaki platform ile karakter arasýndaki mesafeyi ölçer.
     /// </summary>
-    /// <returns>En yukardaki platform ile karakter arasýndaki mesafe yeteri kadar kýsaysa true, yoksa false döndürür. </returns>
-    private bool IsPlayerCloseEnoughToHighestPlatform()
+    /// <returns>En alttaki platform ile karakter arasýndaki mesafe yeteri kadar uzunsa true, yoksa false döndürür. </returns>
+    private bool IsPlayerFarAwayFromLowestPlatform()
     {
-        return _platformSpawner.HighestPlatformYPosition - _player.transform.position.y < _spawnPlatformOffset;
+        return _player.transform.position.y - _activePlatforms.Peek().transform.position.y > _spawnPlatformOffset;
     }
+
 }

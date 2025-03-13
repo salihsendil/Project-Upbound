@@ -1,9 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class PlatformSpawner : MonoBehaviour
 {
+    public event EventHandler<PlatformEventArgs> OnPlatformSpawned;
+    public class PlatformEventArgs : EventArgs
+    {
+        public Vector3 _pos;
+        public PlatformEventArgs(Vector3 pos)
+        {
+            _pos = pos;
+        }
+    }
+
     [Header("References")]
     [Inject] private PlatformObjectPooling _pool;
 
@@ -39,6 +50,7 @@ public class PlatformSpawner : MonoBehaviour
 
         }
         SetPlatformProperties(obj, offsetValue);
+        OnPlatformSpawned?.Invoke(this, new PlatformEventArgs(obj.transform.position));
         _totalPlatformCounter++;
         return obj;
     }
@@ -61,8 +73,8 @@ public class PlatformSpawner : MonoBehaviour
     private Vector2 GenerateRandomPosition(GameObject obj, float offsetValue)
     {
         BasePlatform platform = obj.GetComponent<BasePlatform>();
-        float randomX = Random.Range(_platformXMin, _platformXMax);
-        float randomY = Random.Range(platform.platformMarginMin, platform.platformMarginMax);
+        float randomX = UnityEngine.Random.Range(_platformXMin, _platformXMax);
+        float randomY = UnityEngine.Random.Range(platform.platformMarginMin, platform.platformMarginMax);
         return new Vector2(randomX, _highestPlatformYPosition + randomY + offsetValue);
     }
 

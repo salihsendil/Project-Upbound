@@ -19,22 +19,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 3f;
     [SerializeField] private float _maxSpeed = 10f;
     [SerializeField] private float _highestYPosition = 0f;
+    [SerializeField] private bool _canJump = true;
 
     public static PlayerController Instance { get; private set; }
     public float HighestYPosition { get => _highestYPosition; }
 
     private void Awake()
     {
-        #region SingletonPattern
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        #endregion
-
         _rb = GetComponent<Rigidbody2D>();
         _jumpCollider = GetComponent<CapsuleCollider2D>();
     }
@@ -49,28 +40,36 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         //input girdisi lerp ile yumuþatýlarak hem oyun zorlaþtýrýlsýn hem farklý bi tat kazandýrýlsýn
-        LimitTheLinearVelocity();
-        BlockMultipleJump();
+        //LimitTheLinearVelocity();
+        ControllColliderForPlayerJump();
 
         if (IsPressedScreen())
         {
             MovePlayerOnX();
         }
         SetHighestYPosition();
+        Debug.Log(_rb.linearVelocityY);
+    
     }
 
+    /// <summary>
+    /// Karakterin hýzýný sýnýrlar.
+    /// </summary>
     private void LimitTheLinearVelocity()
     {
         _rb.linearVelocity = Vector2.ClampMagnitude(_rb.linearVelocity, _maxSpeed);
     }
 
-    private void BlockMultipleJump()
+    private void ControllColliderForPlayerJump()
     {
-        _jumpCollider.enabled = _rb.linearVelocity.y > 0.5f ? false : true;
+        _jumpCollider.enabled = _rb.linearVelocityY < Mathf.Epsilon;
     }
 
+    /// <summary>
+    /// Kullanýcýnýn ekrana dokunma durumunu geri döndürür.
+    /// </summary>
+    /// <returns>Ekrana dokunulduysa true, yoksa false döndürür.</returns>
     private bool IsPressedScreen()
     {
         return _inputManager.TouchInput != Vector2.zero;
@@ -88,11 +87,19 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, _worldPos.x, _speed * Time.deltaTime * _speed), transform.position.y, transform.position.z);
     }
 
+    /// <summary>
+    /// Karakteri Rigidbody2D ile zýplatýr.
+    /// </summary>
+    /// <param name="jumpForce">Zýplama kuvveti</param>
     public void PlayerJump(float jumpForce)
     {
         _rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
     }
 
+
+    /// <summary>
+    /// Karakterin çýkabildiði en yüksek Y pozisyonunu kaydeder.
+    /// </summary>
     private void SetHighestYPosition()
     {
         if (transform.position.y > _highestYPosition)

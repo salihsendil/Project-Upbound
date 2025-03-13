@@ -13,7 +13,7 @@ public class StartManager : MonoBehaviour
 
     void Update()
     {
-        if (!_isGameStarted && (Input.touchCount > 0 || Input.GetMouseButtonDown(0)))
+        if (!_isGameStarted && (Input.touchCount > 0 || Input.GetMouseButtonDown(0)))/*DELETE MOUSE CONTROLL, DONT NEEDED*/
         {
             StartGame();
         }

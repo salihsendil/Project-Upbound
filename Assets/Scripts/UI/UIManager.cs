@@ -7,6 +7,7 @@ using Zenject;
 public class UIManager : MonoBehaviour
 {
     [Inject] private StartManager _startManager;
+    [Inject] private PlayerController _player;
 
     [SerializeField] private int _score = 0;
     [SerializeField] private TMP_Text _scoreText;
@@ -24,7 +25,6 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-
         UpdateScore();
         UpdateScoreText();
     }
@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateScore()
     {
-        _score = (int)(PlayerController.Instance.HighestYPosition * _scoreMultiplier);
+        _score = (int)(_player.HighestYPosition * _scoreMultiplier);
     }
 
     private void HasGameStarted(object sender, EventArgs e)

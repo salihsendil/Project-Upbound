@@ -1,10 +1,10 @@
-//Dependecy Injection
+++//Dependecy Injection
 
 //Enemy Spawn
 --Enemyler platformlarýn üstünde durmalý ve hareket etmemeli
 
 //Boost Spawn
---Boostlar platlarýmlarýn üstünde durmalý ve platform'da enemy yoksa spawn olmalý
+--Boostlar platformlarýn üstünde durmalý ve platform'da enemy yoksa spawn olmalý
 
 //New Platforms
 --Zýplatan platform
@@ -23,7 +23,7 @@
 --Karakter ölüm ekraný ve ölüm durumu olmalý
 
 
-//Boosts
+**//Boosts 
 --Platformlarýn üstünde yay çýksýn. Karakteri yükseðe fýrlatsýn.
 --Bir süreliðine zýplama gücünü artýrsýn. Ekrandaki timer bu süreyi göstersin.
 --Bir süreliðine skor çarpanýný 2x yapsýn. Ekrandaki timer bu süreyi göstersin.
