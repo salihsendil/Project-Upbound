@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _highestYPosition = 0f;
     [SerializeField] private bool _canJump = true;
 
-    public static PlayerController Instance { get; private set; }
     public float HighestYPosition { get => _highestYPosition; }
 
     private void Awake()
@@ -48,9 +47,7 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayerOnX();
         }
-        SetHighestYPosition();
-        Debug.Log(_rb.linearVelocityY);
-    
+        SetHighestYPosition();    
     }
 
     /// <summary>

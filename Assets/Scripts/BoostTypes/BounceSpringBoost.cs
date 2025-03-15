@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class JumpBoost : BaseBoost
+public class BounceSpringBoost : BaseBoost
 {
     private float _jumpForce = 12.5f;
 

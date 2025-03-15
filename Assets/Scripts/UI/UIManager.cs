@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class UIManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _startText;
     [SerializeField] private float _flickerTime = 0.5f;
     private Coroutine _flickerCoroutine;
+
+    [SerializeField] private Slider _slider;
 
     void Start()
     {

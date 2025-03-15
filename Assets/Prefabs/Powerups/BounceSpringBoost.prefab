@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 1891167917868281754}
   - component: {fileID: -3577550030867089021}
   m_Layer: 7
-  m_Name: Tramboline
+  m_Name: BounceSpringBoost
   m_TagString: Boost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4371999935146147940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72a52c5b941ea7d46abd974eeb9f0d87, type: 3}
+  m_Script: {fileID: 11500000, guid: 6de64fd058b2c4a47b831136c7bab195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8289565107803377597

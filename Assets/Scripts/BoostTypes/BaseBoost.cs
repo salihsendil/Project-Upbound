@@ -6,4 +6,9 @@ public abstract class BaseBoost : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    virtual public void OnTriggerEnter2D(Collider2D collider)
+    {
+        Destroy(gameObject);
+    }
 }
