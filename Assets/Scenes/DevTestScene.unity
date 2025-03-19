@@ -363,7 +363,7 @@ MonoBehaviour:
   _scoreMultiplier: 2.1
   _startText: {fileID: 1269239215}
   _flickerTime: 0.5
-  _slider: {fileID: 0}
+  _slider: {fileID: 1589390824}
 --- !u!1 &290617181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,8 +1354,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boostSpawnOffset: 0.2
-  _boostPrefab: {fileID: 4371999935146147940, guid: 3dac1cec81df7f642ad1dc8a20732a3a, type: 3}
-  _boostSpawnChange: 50
   _boostList:
   - {fileID: 4371999935146147940, guid: 3dac1cec81df7f642ad1dc8a20732a3a, type: 3}
   - {fileID: 4055148067579496159, guid: 31400d5dfebbaaf4db08a1d52ab3ca5f, type: 3}
@@ -1703,6 +1701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 813c0f8d8df3ad748ad75bb088f1c88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timerDuration: 0
+  _hasTimerFinished: 1
 --- !u!114 &1589390824
 MonoBehaviour:
   m_ObjectHideFlags: 0
