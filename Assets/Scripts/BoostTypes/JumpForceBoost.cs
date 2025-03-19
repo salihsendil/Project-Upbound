@@ -10,9 +10,8 @@ public class JumpForceBoost : BaseBoost
 
     public override void OnTriggerEnter2D(Collider2D collider)
     {
-        //_gameManager.BasePlatformJumpForce = _boostedJumpForce;
-        //_boostTimer.SetTimer(_boostDuration);
-        //_gameManager.TestDebug();
+        _gameManager.BasePlatformJumpForce = _boostedJumpForce;
+        _boostTimer.SetTimer(_boostDuration);
         base.OnTriggerEnter2D(collider);
     }
 }

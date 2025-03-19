@@ -3,15 +3,17 @@ using Zenject;
 
 public abstract class BasePlatform : MonoBehaviour
 {
-    public virtual float jumpForce { get; set; } = 7.5f;
-    public virtual float platformMarginMin { get; set; } = 0.4f;
-    public virtual float platformMarginMax { get; set; } = 1.2f;
+    [Inject] private GameManager _gameManager;
+    protected virtual float jumpForce { get => _gameManager.BasePlatformJumpForce; set => _gameManager.BasePlatformJumpForce = value; }
+    public virtual float platformMarginMin { get; } = 0.4f;
+    public virtual float platformMarginMax { get; } = 1.2f;
 
-    virtual public void OnCollisionEnter2D(Collision2D collision)
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerController>())
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+        if (player != null)
         {
-            collision.gameObject.GetComponent<PlayerController>().PlayerJump(jumpForce);
+            player.PlayerJump(jumpForce);
         }
     }
 

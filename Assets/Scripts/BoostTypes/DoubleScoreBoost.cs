@@ -10,8 +10,8 @@ public class DoubleScoreBoost : BaseBoost
 
     public override void OnTriggerEnter2D(Collider2D collider)
     {
-        //_gameManager.ScoreMultiplier = _boostedScoreMultiplier;
-        //_boostTimer.SetTimer(_boostDuration);
+        _gameManager.ScoreMultiplier = _boostedScoreMultiplier;
+        _boostTimer.SetTimer(_boostDuration);
         base.OnTriggerEnter2D(collider);
     }
 

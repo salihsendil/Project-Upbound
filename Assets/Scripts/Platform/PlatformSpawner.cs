@@ -8,15 +8,16 @@ public class PlatformSpawner : MonoBehaviour
     public event EventHandler<PlatformEventArgs> OnPlatformSpawned;
     public class PlatformEventArgs : EventArgs
     {
-        public Vector3 _pos;
-        public PlatformEventArgs(Vector3 pos)
+        public Transform _transform;
+        public PlatformEventArgs(Transform transform)
         {
-            _pos = pos;
+            _transform = transform;
         }
     }
 
     [Header("References")]
     [Inject] private PlatformObjectPooling _pool;
+    [Inject] private DiContainer _diContainer;
 
     [Header("Platform List")]
     [SerializeField] private List<GameObject> _prefabs = new List<GameObject>();
@@ -46,11 +47,14 @@ public class PlatformSpawner : MonoBehaviour
         }
         else
         {
-            obj = Instantiate(_prefabs[(int)index], transform.position, Quaternion.identity);
+            obj = _diContainer.InstantiatePrefab(_prefabs[(int)index], transform.position, Quaternion.identity, null);
 
         }
         SetPlatformProperties(obj, offsetValue);
-        OnPlatformSpawned?.Invoke(this, new PlatformEventArgs(obj.transform.position));
+        if (!obj.GetComponent<BreakablePlatform>())
+        {
+            OnPlatformSpawned?.Invoke(this, new PlatformEventArgs(obj.transform));
+        }
         _totalPlatformCounter++;
         return obj;
     }

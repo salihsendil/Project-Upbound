@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 
 public class BoostTimer : MonoBehaviour
 {
-    private float _timerDuration = 0;
-    private bool _hasTimerFinished = true;
+    public event EventHandler OnTimerFinish;
+    [SerializeField] private float _timerDuration = 0;
+    [SerializeField] private bool _hasTimerFinished = true;
+
+    public float TimerDuration { get => _timerDuration; }
+    public bool HasTimerFinished { get => _hasTimerFinished; }
 
     private void Update()
     {
@@ -29,6 +34,7 @@ public class BoostTimer : MonoBehaviour
         {
             _timerDuration = 0;
             _hasTimerFinished = true;
+            OnTimerFinish?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     [Inject] private StartManager _startManager;
     [Inject] private PlayerController _player;
+    [Inject] private BoostTimer _boostTimer;
 
     [SerializeField] private int _score = 0;
     [SerializeField] private TMP_Text _scoreText;
@@ -28,17 +29,13 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        UpdateScore();
-        UpdateScoreText();
+        UpdateUIElements();
     }
 
-    private void UpdateScoreText()
+    private void UpdateUIElements()
     {
+        _slider.maxValue = _slider.value = _boostTimer.TimerDuration;
         _scoreText.text = "Score: " + _score.ToString();
-    }
-
-    private void UpdateScore()
-    {
         _score = (int)(_player.HighestYPosition * _scoreMultiplier);
     }
 
