@@ -12,5 +12,6 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<PlatformSpawner>().FromComponentInHierarchy().AsSingle();
         Container.Bind<BoostTimer>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DifficultyManager>().AsSingle();
+        Container.Bind<UIManager>().FromComponentInHierarchy().AsSingle();
     }
 }

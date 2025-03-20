@@ -13,6 +13,7 @@ public abstract class BasePlatform : MonoBehaviour
         PlayerController player = collision.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
+            Debug.Log("jump force base platform class: " + jumpForce);
             player.PlayerJump(jumpForce);
         }
     }

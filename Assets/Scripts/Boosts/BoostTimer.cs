@@ -20,8 +20,9 @@ public class BoostTimer : MonoBehaviour
 
     public void SetTimer(float duration)
     {
+        OnTimerFinish?.Invoke(this, EventArgs.Empty);
         _timerDuration = duration;
-        _hasTimerFinished = true;
+        _hasTimerFinished = false;
     }
 
     private void ReduceTime(float reduce)

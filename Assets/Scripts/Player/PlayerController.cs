@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayerOnX();
         }
-        SetHighestYPosition();    
+        SetHighestYPosition();
     }
 
     /// <summary>

@@ -34,9 +34,14 @@ public class UIManager : MonoBehaviour
 
     private void UpdateUIElements()
     {
-        _slider.maxValue = _slider.value = _boostTimer.TimerDuration;
+        _slider.value = _boostTimer.TimerDuration;
         _scoreText.text = "Score: " + _score.ToString();
         _score = (int)(_player.HighestYPosition * _scoreMultiplier);
+    }
+
+    public void SetTimerUIElement(float value)
+    {
+        _slider.maxValue = value;
     }
 
     private void HasGameStarted(object sender, EventArgs e)
