@@ -5,29 +5,53 @@ using Zenject;
 public class GameManager : MonoBehaviour
 {
     [Inject] private BoostTimer _boostTimer;
+    [Inject] private PlayerController _player;
+
+    private const float DefaultJumpForce = 7.5f;
+    private const float DefaultScoreMultiplier = 45.8f;
 
     [SerializeField] private float _playerScore = 0;
-    [SerializeField] private float _basePlatformJumpForce = 7.5f;
-    [SerializeField] private float _scoreMultiplier = 2.1f;
+    [SerializeField] private float _platformJumpForce = DefaultJumpForce;
+    [SerializeField] private float _scoreMultiplier = DefaultScoreMultiplier;
 
-    public float BasePlatformJumpForce { get => _basePlatformJumpForce; set => _basePlatformJumpForce = value; }
+    public float BasePlatformJumpForce { get => _platformJumpForce; set => _platformJumpForce = value; }
     public float ScoreMultiplier { get => _scoreMultiplier; set => _scoreMultiplier = value; }
     public float PlayerScore { get => _playerScore; set => _playerScore = value; }
 
-    private void Start()
+    private void OnEnable()
     {
+        BoostEventManager.OnJumpBoost += ApplyJumpBoost;
+        BoostEventManager.OnScoreMultiplierBoost += ApplyScoreMultiplierBoost;
         _boostTimer.OnTimerFinish += ResetBoostedValues;
+        _player.OnScoreAdded += AddScore;
     }
 
-    public void AddScore(float score)
+    private void OnDisable()
     {
-        _playerScore += score;
+        BoostEventManager.OnJumpBoost -= ApplyJumpBoost;
+        BoostEventManager.OnScoreMultiplierBoost -= ApplyScoreMultiplierBoost;
+        _boostTimer.OnTimerFinish -= ResetBoostedValues;
+        _player.OnScoreAdded -= AddScore;
+    }
+
+    public void AddScore(float value)
+    {
+        _playerScore += value * _scoreMultiplier;
     }
 
     private void ResetBoostedValues(object sender, EventArgs e)
     {
-        _basePlatformJumpForce = 7.5f;
-        _scoreMultiplier = 2.1f;
+        _platformJumpForce = DefaultJumpForce;
+        _scoreMultiplier = DefaultScoreMultiplier;
     }
 
+    private void ApplyJumpBoost(float jumpForce)
+    {
+        _platformJumpForce = jumpForce;
+    }
+
+    private void ApplyScoreMultiplierBoost(float multiplier)
+    {
+        _scoreMultiplier = multiplier;
+    }
 }

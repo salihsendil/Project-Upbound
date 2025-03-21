@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8436636991677249475}
   - component: {fileID: 369992949872398885}
-  - component: {fileID: 8676301287517041516}
   - component: {fileID: 6401364806518836325}
+  - component: {fileID: 8676301287517041516}
   m_Layer: 0
   m_Name: JumpForceBoost
   m_TagString: Untagged
@@ -89,18 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8676301287517041516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4055148067579496159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 209abb5d404171541bf8275bec514e4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!60 &6401364806518836325
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -151,3 +139,16 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
+--- !u!114 &8676301287517041516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055148067579496159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 209abb5d404171541bf8275bec514e4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 369992949872398885}

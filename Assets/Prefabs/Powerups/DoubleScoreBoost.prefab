@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1470050208790051808}
   - component: {fileID: 8874756687997362541}
-  - component: {fileID: 5875618771161653646}
   - component: {fileID: 7705028907067197262}
+  - component: {fileID: 5875618771161653646}
   m_Layer: 0
   m_Name: DoubleScoreBoost
   m_TagString: Untagged
@@ -89,18 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5875618771161653646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5543069890435118745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d70696db3601ac04d8d3d57e0454441a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!70 &7705028907067197262
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -138,3 +126,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
+--- !u!114 &5875618771161653646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543069890435118745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d68fe412ac18b44a0463b047f15e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpriteRenderer: {fileID: 8874756687997362541}

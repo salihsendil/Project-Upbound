@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BounceSpringBoost : BaseBoost
 {
-    private float _jumpForce = 12.5f;
+    private float _jumpForce = 15f;
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {

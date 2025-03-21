@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _canJump = true;
 
     public float HighestYPosition { get => _highestYPosition; }
+    public event Action<float> OnScoreAdded;
 
     private void Awake()
     {
@@ -101,6 +102,8 @@ public class PlayerController : MonoBehaviour
     {
         if (transform.position.y > _highestYPosition)
         {
+            float travaledRoad = transform.position.y - _highestYPosition;
+            OnScoreAdded?.Invoke(travaledRoad);
             _highestYPosition = transform.position.y;
         }
     }
