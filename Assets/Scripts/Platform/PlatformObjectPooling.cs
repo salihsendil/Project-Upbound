@@ -49,8 +49,8 @@ public class PlatformObjectPooling : MonoBehaviour
             for (int i = 0; i < POOL_SIZE; i++)
             {
                 GameObject obj = _diContainer.InstantiatePrefab(_simplePlatformPrefab, transform.position, Quaternion.identity, null);
-                _platformList.Enqueue(obj);
                 obj.SetActive(false);
+                _platformList.Enqueue(obj);
             }
         }
     }

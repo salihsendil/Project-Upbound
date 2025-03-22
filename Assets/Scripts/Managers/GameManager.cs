@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
         BoostEventManager.OnJumpBoost += ApplyJumpBoost;
         BoostEventManager.OnScoreMultiplierBoost += ApplyScoreMultiplierBoost;
         _boostTimer.OnTimerFinish += ResetBoostedValues;
-        _player.OnScoreAdded += AddScore;
+        _player.OnPlayerGoUp += AddScore;
     }
 
     private void OnDisable()
@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         BoostEventManager.OnJumpBoost -= ApplyJumpBoost;
         BoostEventManager.OnScoreMultiplierBoost -= ApplyScoreMultiplierBoost;
         _boostTimer.OnTimerFinish -= ResetBoostedValues;
-        _player.OnScoreAdded -= AddScore;
+        _player.OnPlayerGoUp -= AddScore;
     }
 
     public void AddScore(float value)

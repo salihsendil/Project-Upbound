@@ -37,3 +37,6 @@
 //BUGS GONNA FIX
 --Yay ve platform bazý durumlarda double zýplatýyor. Karakterin hýzý sýfýra yaklaþýnca zýplamasýna izin verilen durumda karakter platformdan zýplýyor 
 hýzýnýn epsilon kýyaslamasý collider'ý kapatmaya yetiþemiyor ve yaydan da zýplamýþ oluyor. Böylece double jump alýyor.
+
+--Arkaplan hareket etmiyor.
+--ýþýklar aðýr yük oluþturuyor.
