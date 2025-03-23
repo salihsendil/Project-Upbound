@@ -27,7 +27,6 @@
 --Platformlarýn üstünde yay çýksýn. Karakteri yükseðe fýrlatsýn.
 --Bir süreliðine zýplama gücünü artýrsýn. Ekrandaki timer bu süreyi göstersin.
 --Bir süreliðine skor çarpanýný 2x yapsýn. Ekrandaki timer bu süreyi göstersin.
-
 --Enemy eklenince shield veren bir tane daha power up ekleyebiliriz.
 
 

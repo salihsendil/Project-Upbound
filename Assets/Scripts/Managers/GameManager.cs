@@ -9,19 +9,21 @@ public class GameManager : MonoBehaviour
 
     private const float DefaultJumpForce = 7.5f;
     private const float DefaultScoreMultiplier = 45.8f;
+    private const float DefaultTimeScale = 2F;
 
     [SerializeField] private float _playerScore = 0;
     [SerializeField] private float _platformJumpForce = DefaultJumpForce;
     [SerializeField] private float _scoreMultiplier = DefaultScoreMultiplier;
 
-    public float BasePlatformJumpForce { get => _platformJumpForce; set => _platformJumpForce = value; }
-    public float ScoreMultiplier { get => _scoreMultiplier; set => _scoreMultiplier = value; }
-    public float PlayerScore { get => _playerScore; set => _playerScore = value; }
+    public float BasePlatformJumpForce { get => _platformJumpForce; }
+    public float ScoreMultiplier { get => _scoreMultiplier; }
+    public float PlayerScore { get => _playerScore; }
 
     private void OnEnable()
     {
         BoostEventManager.OnJumpBoost += ApplyJumpBoost;
         BoostEventManager.OnScoreMultiplierBoost += ApplyScoreMultiplierBoost;
+        BoostEventManager.OnTimeSpeedUpBoost += ApplyTimeSpeedUpBoost;
         _boostTimer.OnTimerFinish += ResetBoostedValues;
         _player.OnPlayerGoUp += AddScore;
     }
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         BoostEventManager.OnJumpBoost -= ApplyJumpBoost;
         BoostEventManager.OnScoreMultiplierBoost -= ApplyScoreMultiplierBoost;
+        BoostEventManager.OnTimeSpeedUpBoost -= ApplyTimeSpeedUpBoost;
         _boostTimer.OnTimerFinish -= ResetBoostedValues;
         _player.OnPlayerGoUp -= AddScore;
     }
@@ -43,6 +46,7 @@ public class GameManager : MonoBehaviour
     {
         _platformJumpForce = DefaultJumpForce;
         _scoreMultiplier = DefaultScoreMultiplier;
+        Time.timeScale = DefaultTimeScale;
     }
 
     private void ApplyJumpBoost(float jumpForce)
@@ -53,5 +57,10 @@ public class GameManager : MonoBehaviour
     private void ApplyScoreMultiplierBoost(float multiplier)
     {
         _scoreMultiplier = multiplier;
+    }
+
+    private void ApplyTimeSpeedUpBoost(float timeScale)
+    {
+        Time.timeScale = timeScale;
     }
 }

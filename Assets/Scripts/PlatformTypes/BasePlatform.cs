@@ -4,7 +4,7 @@ using Zenject;
 public abstract class BasePlatform : MonoBehaviour
 {
     [Inject] private GameManager _gameManager;
-    protected virtual float jumpForce { get => _gameManager.BasePlatformJumpForce; set => _gameManager.BasePlatformJumpForce = value; }
+    protected virtual float jumpForce { get => _gameManager.BasePlatformJumpForce; }
     public virtual float platformMarginMin { get; } = 0.4f;
     public virtual float platformMarginMax { get; } = 1.2f;
 

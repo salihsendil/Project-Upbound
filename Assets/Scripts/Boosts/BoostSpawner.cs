@@ -7,7 +7,7 @@ public class BoostSpawner : MonoBehaviour
 {
     [Inject] private DiContainer _diContainer;
     [Inject] private PlatformSpawner _platformSpawner;
-    [SerializeField] private float _boostSpawnOffset = 0.3f;
+    [SerializeField] private float _boostSpawnOffset = 0.5f;
     [SerializeField] private List<GameObject> _boostList = new List<GameObject>();
 
     void OnEnable()
@@ -31,10 +31,11 @@ public class BoostSpawner : MonoBehaviour
     {
         int number = GenerateBoostSpawnChanceNumber();
 
-        if (number >= 4 && number <= 98) { return null; }
-        if (number < 4 && number >= 2) { return _boostList[0]; }
-        if (number < 2) { return _boostList[1]; }
-        return _boostList[2];
+        if (number >= 6 && number <= 98) { return null; }
+        if (number < 6 && number >= 4) { return _boostList[0]; }
+        if (number < 4 && number >= 2) { return _boostList[1]; }
+        if (number < 2) { return _boostList[2]; }
+        return _boostList[3];
     }
 
     private int GenerateBoostSpawnChanceNumber()

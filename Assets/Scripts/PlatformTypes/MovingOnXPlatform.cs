@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovingOnXPlatform : BasePlatform
 {
     [SerializeField] private float xLimit = 2.75f;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float speed = 2f;
     private Vector3 moveDirection = Vector3.right;
 
     private void FixedUpdate()
