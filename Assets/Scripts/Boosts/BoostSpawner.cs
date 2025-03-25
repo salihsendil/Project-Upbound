@@ -6,36 +6,34 @@ using Zenject;
 public class BoostSpawner : MonoBehaviour
 {
     [Inject] private DiContainer _diContainer;
-    [Inject] private PlatformSpawner _platformSpawner;
     [SerializeField] private float _boostSpawnOffset = 0.5f;
     [SerializeField] private List<GameObject> _boostList = new List<GameObject>();
 
     void OnEnable()
     {
-        _platformSpawner.OnPlatformSpawned += SpawnBoost;
+        PlatformSpawner.OnBoostPlatformSpawned += SpawnBoost;
     }
 
     void OnDisable()
     {
-        _platformSpawner.OnPlatformSpawned -= SpawnBoost;
+        PlatformSpawner.OnBoostPlatformSpawned -= SpawnBoost;
     }
 
-    private void SpawnBoost(object sender, PlatformSpawner.PlatformEventArgs e)
+    private void SpawnBoost(GameObject obj)
     {
-        GameObject obj = ChooseBoostType();
-        if (obj == null) { return; }
-        _diContainer.InstantiatePrefab(obj, e._transform.position + new Vector3(0f, _boostSpawnOffset, 0f), Quaternion.identity, e._transform);
+        GameObject gameObject = ChooseBoostType();
+        if (gameObject == null) { return; }
+        _diContainer.InstantiatePrefab(gameObject, obj.transform.position + new Vector3(0f, _boostSpawnOffset, 0f), Quaternion.identity, obj.transform);
     }
 
     private GameObject ChooseBoostType()
     {
         int number = GenerateBoostSpawnChanceNumber();
 
-        if (number >= 6 && number <= 98) { return null; }
-        if (number < 6 && number >= 4) { return _boostList[0]; }
-        if (number < 4 && number >= 2) { return _boostList[1]; }
-        if (number < 2) { return _boostList[2]; }
-        return _boostList[3];
+        if (number >= 30 && number <= 100) { return null; }
+        if (number < 30 && number >= 20) { return _boostList[0]; }
+        if (number < 20 && number >= 10) { return _boostList[1]; }
+        return _boostList[2];
     }
 
     private int GenerateBoostSpawnChanceNumber()

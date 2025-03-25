@@ -22,7 +22,7 @@ public class StartManager : MonoBehaviour
     private void StartGame()
     {
         _isGameStarted = true;
-        Time.timeScale = 2;
+        Time.timeScale = GameManager.DefaultTimeScale;
         OnGameStarted?.Invoke(this, EventArgs.Empty);
     }
 

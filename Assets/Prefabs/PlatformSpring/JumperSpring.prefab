@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 1891167917868281754}
   - component: {fileID: -3577550030867089021}
   m_Layer: 7
-  m_Name: BounceSpringBoost
+  m_Name: JumperSpring
   m_TagString: Boost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,9 +7,10 @@ public class GameManager : MonoBehaviour
     [Inject] private BoostTimer _boostTimer;
     [Inject] private PlayerController _player;
 
+    public static float DefaultTimeScale = 2F;
+
     private const float DefaultJumpForce = 7.5f;
     private const float DefaultScoreMultiplier = 45.8f;
-    private const float DefaultTimeScale = 2F;
 
     [SerializeField] private float _playerScore = 0;
     [SerializeField] private float _platformJumpForce = DefaultJumpForce;

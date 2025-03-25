@@ -8,11 +8,6 @@ public abstract class BaseBoost : MonoBehaviour
     [SerializeField] public virtual float BoostDuration { get; private set; }
     [SerializeField] public SpriteRenderer SpriteRenderer;
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {
-        Destroy(gameObject);
-    }
-
     protected virtual void ApplyBoostEffect() { }
 
     protected virtual void OnTriggerEnter2D(Collider2D collider)

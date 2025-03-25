@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         _worldPos.x = Mathf.Clamp(_worldPos.x, -_screenBound, _screenBound);
 
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, _worldPos.x, _speed * Time.deltaTime * _speed), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, _worldPos.x, _speed * Time.deltaTime), transform.position.y, transform.position.z);
     }
 
     /// <summary>

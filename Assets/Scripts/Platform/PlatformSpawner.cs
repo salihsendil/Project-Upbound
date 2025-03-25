@@ -5,15 +5,8 @@ using Zenject;
 
 public class PlatformSpawner : MonoBehaviour
 {
-    public event EventHandler<PlatformEventArgs> OnPlatformSpawned;
-    public class PlatformEventArgs : EventArgs
-    {
-        public Transform _transform;
-        public PlatformEventArgs(Transform transform)
-        {
-            _transform = transform;
-        }
-    }
+    public static Action<GameObject> OnJumperPlatformSpawned;
+    public static Action<GameObject> OnBoostPlatformSpawned;
 
     [Header("References")]
     [Inject] private PlatformObjectPooling _pool;
@@ -53,7 +46,7 @@ public class PlatformSpawner : MonoBehaviour
         SetPlatformProperties(obj, offsetValue);
         if (!obj.GetComponent<BreakablePlatform>())
         {
-            OnPlatformSpawned?.Invoke(this, new PlatformEventArgs(obj.transform));
+            IsPlatformHaveAnyObject(obj);
         }
         _totalPlatformCounter++;
         return obj;
@@ -94,4 +87,15 @@ public class PlatformSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Platformun hangi objeye sahip olup olmayacaðýný belirler.
+    /// </summary>
+    /// <param name="obj">Platform gameobject</param>
+    private void IsPlatformHaveAnyObject(GameObject obj)
+    {
+        int number = UnityEngine.Random.Range(0, 100);
+        if (number >= 15 && number <= 100) { return; }
+        if (number < 10 && number >= 5){ OnJumperPlatformSpawned?.Invoke(obj); }
+        if (number < 5 && number >= 0) { OnBoostPlatformSpawned?.Invoke(obj); }
+    }
 }

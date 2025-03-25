@@ -122,5 +122,4 @@ public class PlatformManager : MonoBehaviour
     {
         return _player.transform.position.y - _activePlatforms.Peek().transform.position.y > _spawnPlatformOffset;
     }
-
 }
