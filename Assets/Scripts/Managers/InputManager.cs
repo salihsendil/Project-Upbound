@@ -18,10 +18,10 @@ public class InputManager : MonoBehaviour
         _playerInput.Enable();
     }
 
-
     private void Move(InputAction.CallbackContext callback)
     {
         _touchInput = callback.ReadValue<Vector2>();
+        _touchInput = Camera.main.ScreenToViewportPoint(_touchInput);
     }
 
     private void OnEnable()

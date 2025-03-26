@@ -6,6 +6,7 @@ using Zenject;
 public class PlatformSpawner : MonoBehaviour
 {
     public static Action<GameObject> OnJumperPlatformSpawned;
+    public static Action<GameObject> OnEnemyPlatformSpawned;
     public static Action<GameObject> OnBoostPlatformSpawned;
 
     [Header("References")]
@@ -16,7 +17,7 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> _prefabs = new List<GameObject>();
 
     [Header("Platform Boundaries")]
-    [SerializeField] private Vector2 _spawnStartPoint = Vector2.zero;
+    [SerializeField] private Vector2 _spawnStartPoint = Vector2.down;
     [SerializeField] private float _platformXMin = -2.75f;
     [SerializeField] private float _platformXMax = 2.75f;
     [SerializeField] private float _highestPlatformYPosition;
@@ -24,7 +25,6 @@ public class PlatformSpawner : MonoBehaviour
 
     [Header("Getters - Setters")]
     public float HighestPlatformYPosition { get => _highestPlatformYPosition; }
-    public Vector2 SpawnStartPoint { get => _spawnStartPoint; }
 
     /// <summary>
     /// Türüne göre havuzdan platform çeker, havuz gerekli türü karþýlamýyorsa platform oluþturur.
@@ -46,7 +46,10 @@ public class PlatformSpawner : MonoBehaviour
         SetPlatformProperties(obj, offsetValue);
         if (!obj.GetComponent<BreakablePlatform>())
         {
-            IsPlatformHaveAnyObject(obj);
+            if (_totalPlatformCounter >= 75)
+            {
+                IsPlatformHaveAnyObject(obj);
+            }
         }
         _totalPlatformCounter++;
         return obj;
@@ -58,7 +61,7 @@ public class PlatformSpawner : MonoBehaviour
     /// <param name="obj">Pozisyonu ayarlanacak platform.</param>
     public void SetPlatformProperties(GameObject obj, float offsetValue)
     {
-        obj.transform.position = _totalPlatformCounter == 0 ? _spawnStartPoint : GenerateRandomPosition(obj, offsetValue) + _spawnStartPoint;
+        obj.transform.position = _totalPlatformCounter == 0 ? _spawnStartPoint : GenerateRandomPosition(obj, offsetValue);
         SetHighestPlatformYPosition(obj.transform.position.y);
     }
 
@@ -95,7 +98,8 @@ public class PlatformSpawner : MonoBehaviour
     {
         int number = UnityEngine.Random.Range(0, 100);
         if (number >= 15 && number <= 100) { return; }
-        if (number < 10 && number >= 5){ OnJumperPlatformSpawned?.Invoke(obj); }
+        if (number < 12 && number >= 9) { OnEnemyPlatformSpawned?.Invoke(obj); }
+        if (number < 9 && number >= 5) { OnJumperPlatformSpawned?.Invoke(obj); }
         if (number < 5 && number >= 0) { OnBoostPlatformSpawned?.Invoke(obj); }
     }
 }

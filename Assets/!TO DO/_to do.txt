@@ -1,15 +1,15 @@
 ++//Dependecy Injection
 
-//Enemy Spawn
+++//Enemy Spawn
 --Enemyler platformlarýn üstünde durmalý ve hareket etmemeli
 
-//Boost Spawn
+++//Boost Spawn
 --Boostlar platformlarýn üstünde durmalý ve platform'da enemy yoksa spawn olmalý
 
 //New Platforms
 --Zýplatan platform
 
-//Follow Cam Update
+++//Follow Cam Update
 --Kamera takip sistemi düzeltilmeli ve karakter saðdan ekrandan çýkýnca soldan tekrar ekrana girmeli
 
 //Coin Spawn

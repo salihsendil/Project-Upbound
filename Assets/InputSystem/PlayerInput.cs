@@ -40,8 +40,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""979ce8ee-dd62-45db-b155-e1c68ad43204"",
-                    ""path"": ""<Touchscreen>/position"",
+                    ""id"": ""3f516b83-6b20-4bdf-b13a-83876c0f1316"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

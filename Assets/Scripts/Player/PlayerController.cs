@@ -4,89 +4,67 @@ using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
+    public event Action<float> OnPlayerGoUp;
+
     [Header("References")]
     private Rigidbody2D _rb;
-    private CapsuleCollider2D _jumpCollider;
+    private BoxCollider2D _jumpCollider;
     [Inject] private InputManager _inputManager;
 
-    [Header("Camera Variables")]
-    private Camera _mainCam;
-    private float _mainCamSize;
-    private float _screenBound;
-
     [Header("Movement Variables")]
-    private Vector3 _worldPos;
-    [SerializeField] private float _speed = 3f;
-    [SerializeField] private float _maxSpeed = 10f;
+    [SerializeField] private float _speed = 5f;
     [SerializeField] private float _highestYPosition = 0f;
     [SerializeField] private bool _canJump = true;
 
+    [Header("X Limits")]
+    private float _rightLimit = 3f;
+    private float _leftLimit = -3f;
+
+    [Header("Health")]
+    private bool _isPlayerDead;
+
     public float HighestYPosition { get => _highestYPosition; }
-    public event Action<float> OnPlayerGoUp;
+    public bool IsPlayerDead { get => _isPlayerDead; set => _isPlayerDead = value; }
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _jumpCollider = GetComponent<CapsuleCollider2D>();
-    }
-
-
-    private void Start()
-    {
-        _mainCam = Camera.main;
-        _mainCamSize = Camera.main.orthographicSize;
-        _screenBound = (_mainCamSize / 2) - (transform.localScale.x / 2);
+        _jumpCollider = GetComponent<BoxCollider2D>();
     }
 
     void Update()
     {
-        //input girdisi lerp ile yumuþatýlarak hem oyun zorlaþtýrýlsýn hem farklý bi tat kazandýrýlsýn
-        //LimitTheLinearVelocity();
-        ControllColliderForPlayerJump();
-
-        if (IsPressedScreen())
+        if (!_isPlayerDead)
         {
             MovePlayerOnX();
+            SetPlayerXLimits();
         }
     }
 
     private void FixedUpdate()
     {
-        SetHighestYPosition();
+        if (!_isPlayerDead)
+        {
+            ControllColliderForPlayerJump();
+            SetHighestYPosition();
+        }
     }
 
     /// <summary>
-    /// Karakterin hýzýný sýnýrlar.
+    /// Karakterin hýzýna baðlý olarak collider'ini açýp kapatarak zýplama durumunu yönetir.
     /// </summary>
-    private void LimitTheLinearVelocity()
-    {
-        _rb.linearVelocity = Vector2.ClampMagnitude(_rb.linearVelocity, _maxSpeed);
-    }
-
     private void ControllColliderForPlayerJump()
     {
         _jumpCollider.enabled = _rb.linearVelocityY < Mathf.Epsilon;
     }
 
     /// <summary>
-    /// Kullanýcýnýn ekrana dokunma durumunu geri döndürür.
+    /// Karakterin Input Deltaya baðlý X eksen hareketini saðlar.
     /// </summary>
-    /// <returns>Ekrana dokunulduysa true, yoksa false döndürür.</returns>
-    private bool IsPressedScreen()
-    {
-        return _inputManager.TouchInput != Vector2.zero;
-    }
-
     private void MovePlayerOnX()
     {
-        _worldPos = _mainCam.ScreenToWorldPoint(new Vector3(
-                _inputManager.TouchInput.x,
-                _inputManager.TouchInput.y,
-                Camera.main.nearClipPlane));
-
-        _worldPos.x = Mathf.Clamp(_worldPos.x, -_screenBound, _screenBound);
-
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, _worldPos.x, _speed * Time.deltaTime), transform.position.y, transform.position.z);
+        Vector3 targetPos = new Vector3(_inputManager.TouchInput.x, 0f, 0f);
+        transform.position += targetPos * _speed;
     }
 
     /// <summary>
@@ -109,6 +87,22 @@ public class PlayerController : MonoBehaviour
             float travaledRoad = transform.position.y - _highestYPosition;
             OnPlayerGoUp?.Invoke(travaledRoad);
             _highestYPosition = transform.position.y;
+        }
+    }
+
+    /// <summary>
+    /// Karakterin ekranýn saðýndan ve solundan çýkma durumuna göre pozisyon deðiþikliðini yönetir.
+    /// </summary>
+    private void SetPlayerXLimits()
+    {
+        if (transform.position.x > _rightLimit)
+        {
+            transform.position = new Vector3(_leftLimit, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x < _leftLimit)
+        {
+            transform.position = new Vector3(_rightLimit, transform.position.y, transform.position.z); ;
         }
     }
 
