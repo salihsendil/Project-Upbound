@@ -4,7 +4,7 @@ using UnityEngine;
 public class StartManager : MonoBehaviour
 {
     private bool _isGameStarted = false;
-    public event EventHandler OnGameStarted;
+    public event Action OnGameStarted;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class StartManager : MonoBehaviour
     {
         _isGameStarted = true;
         Time.timeScale = GameManager.DefaultTimeScale;
-        OnGameStarted?.Invoke(this, EventArgs.Empty);
+        OnGameStarted?.Invoke();
     }
 
 }

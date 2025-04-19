@@ -12,7 +12,10 @@ public class BackgroundScroller : MonoBehaviour
     private void Awake()
     {
         _meshRenderer = GetComponent<MeshRenderer>();
-        _player.OnPlayerGoUp += ScrollBackground;
+        if (_player)
+        {
+            _player.OnPlayerGoUp += ScrollBackground;
+        }
     }
 
     private void ScrollBackground(float travaledValue)

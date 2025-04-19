@@ -13,5 +13,7 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<BoostTimer>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DifficultyManager>().AsSingle();
         Container.Bind<UIManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<ScoreUI>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PlatformManager>().FromComponentInHierarchy().AsSingle();
     }
 }

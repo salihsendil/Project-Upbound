@@ -122,4 +122,13 @@ public class PlatformManager : MonoBehaviour
     {
         return _player.transform.position.y - _activePlatforms.Peek().transform.position.y > _spawnPlatformOffset;
     }
+
+    /// <summary>
+    /// En alttaki platformu döndürür.
+    /// </summary>
+    /// <returns>En alttaki platformu GameObject olarak döndürür.</returns>
+    public GameObject GetFirstSpawnedPlatform()
+    {
+        return _activePlatforms.Peek();
+    }
 }

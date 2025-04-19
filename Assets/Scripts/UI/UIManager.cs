@@ -8,72 +8,63 @@ using Zenject;
 public class UIManager : MonoBehaviour
 {
     [Inject] private StartManager _startManager;
-    [Inject] private BoostTimer _boostTimer;
     [Inject] private GameManager _gameManager;
-
-    [SerializeField] private int _score = 0;
-    [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private float _scoreMultiplier = 2.1f;
+    [Inject] private PlayerController _playerController;
 
     [SerializeField] private TMP_Text _startText;
     [SerializeField] private float _flickerTime = 0.5f;
     private Coroutine _flickerCoroutine;
 
-    [SerializeField] private Slider _slider;
-    [SerializeField] private Image _sliderImg;
+    [SerializeField] private GameObject _pauseMenu;
+    [SerializeField] private GameObject _gameOverMenu;
 
-    private void OnEnable()
+    private void Awake()
     {
-        BoostEventManager.OnBoostTimerUI += SetTimerUIElement;
-        _boostTimer.OnTimerFinish += HasBoostEnded;
-    }
-
-    private void OnDisable()
-    {
-        BoostEventManager.OnBoostTimerUI -= SetTimerUIElement;
-        _boostTimer.OnTimerFinish -= HasBoostEnded;
+        SetPanels();
     }
 
     void Start()
     {
-        SetUIElementsAtStart();
-
         _startManager.OnGameStarted += HasGameStarted;
+        _playerController.OnPlayerDeath += HasPlayerDeath;
         _flickerCoroutine = StartCoroutine(StartTextFlickering());
     }
 
-    void Update()
+    private void OnDisable()
     {
-        UpdateUIElements();
+        _playerController.OnPlayerDeath -= HasPlayerDeath;
     }
 
-    private void SetUIElementsAtStart()
+    public void SetGamePauseSituation()
     {
-        _sliderImg.enabled = false;
-    }
-
-    private void UpdateUIElements()
-    {
-        _slider.value = _boostTimer.TimerDuration;
-        _scoreText.text = "Score: " + ((int)_gameManager.PlayerScore).ToString();
-    }
-
-    public void SetTimerUIElement(float value, Sprite sprite)
-    {
-        _slider.maxValue = value;
-        if (!_sliderImg.enabled)
+        bool isPaused = Time.timeScale == 0;
+        if (isPaused)
         {
-            _sliderImg.enabled = true;
+            Time.timeScale = _gameManager.CurrentTimeScale;
+            _playerController.enabled = true;
+            _pauseMenu.SetActive(false);
         }
-        _sliderImg.sprite = sprite;
+
+        else
+        {
+            Time.timeScale = 0;
+            _playerController.enabled = false;
+            _pauseMenu.SetActive(true);
+        }
     }
 
-    private void HasBoostEnded(object sender, EventArgs e)
+    private void HasPlayerDeath()
     {
-        _sliderImg.enabled = false;
+        _gameOverMenu.SetActive(true);
     }
 
-    private void HasGameStarted(object sender, EventArgs e)
+    private void SetPanels()
+    {
+        _pauseMenu.SetActive(false);
+        _gameOverMenu.SetActive(false);
+    }
+
+    private void HasGameStarted()
     {
         StopCoroutine(_flickerCoroutine);
         _startText.enabled = false;
@@ -84,8 +75,11 @@ public class UIManager : MonoBehaviour
         while (true)
         {
             _startText.enabled = !_startText.enabled;
+            if (_startText.enabled)
+            {
+                AudioManager.Instance.PlaySound(SoundType.StartGameBeep);
+            }
             yield return new WaitForSecondsRealtime(_flickerTime);
         }
     }
-
 }

@@ -6,6 +6,9 @@
 ++//Boost Spawn
 --Boostlar platformlarýn üstünde durmalý ve platform'da enemy yoksa spawn olmalý
 
+--Ayný anda bir çok boostu toplamak için boost durumlarýný nesne olarak spawn edip duruma göre aktifleþtirelim. 
+  UI güncellemesinden slider kaldýrýp sadece fotoðraf gösterelim. Belki text ile gösterim yapýlabilir.
+
 //New Platforms
 --Zýplatan platform
 
@@ -28,6 +31,7 @@
 --Bir süreliðine zýplama gücünü artýrsýn. Ekrandaki timer bu süreyi göstersin.
 --Bir süreliðine skor çarpanýný 2x yapsýn. Ekrandaki timer bu süreyi göstersin.
 --Time scale artýran bir boost eklendi.
+--Global Light kapatan bir özellik eklemeli.
 --Enemy eklenince shield veren bir tane daha power up ekleyebiliriz.
 
 
@@ -38,5 +42,10 @@
 --Yay ve platform bazý durumlarda double zýplatýyor. Karakterin hýzý sýfýra yaklaþýnca zýplamasýna izin verilen durumda karakter platformdan zýplýyor 
 hýzýnýn epsilon kýyaslamasý collider'ý kapatmaya yetiþemiyor ve yaydan da zýplamýþ oluyor. Böylece double jump alýyor.
 
+
+//enemy öldürülünce ek skor artsýn.
+//enemy öldürülünce world text çýkýp alýnan skoru yazabilir.
+
+
 --Arkaplan hareket etmiyor.
---ýþýklar aðýr yük oluþturuyor.
+--ýþýklar aðýr yük oluþturuyor. //shader ile güncellendi þu an daha iyi hafýza yönetimi olarak

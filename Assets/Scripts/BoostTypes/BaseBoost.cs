@@ -13,6 +13,7 @@ public abstract class BaseBoost : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         _boostTimer.SetTimer(BoostDuration);
+        AudioManager.Instance.PlaySound(SoundType.BoostCollected);
         BoostEventManager.OnBoostTimerUI?.Invoke(BoostDuration, SpriteRenderer.sprite);
         ApplyBoostEffect();
         Destroy(gameObject);

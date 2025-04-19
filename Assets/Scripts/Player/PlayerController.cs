@@ -1,19 +1,23 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class PlayerController : MonoBehaviour
 {
     public event Action<float> OnPlayerGoUp;
+    public event Action OnPlayerDeath;
 
     [Header("References")]
     private Rigidbody2D _rb;
     private BoxCollider2D _jumpCollider;
     [Inject] private InputManager _inputManager;
+    [Inject] private PlatformManager _platformManager;
 
     [Header("Movement Variables")]
     [SerializeField] private float _speed = 5f;
     [SerializeField] private float _highestYPosition = 0f;
+    [SerializeField] private float _lowestYPosition = -5f;
     [SerializeField] private bool _canJump = true;
 
     [Header("X Limits")]
@@ -22,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Health")]
     private bool _isPlayerDead;
+    private float _deathDelay = 0.5f;
 
     public float HighestYPosition { get => _highestYPosition; }
     public bool IsPlayerDead { get => _isPlayerDead; set => _isPlayerDead = value; }
@@ -38,6 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayerOnX();
             SetPlayerXLimits();
+            HandlePlayerDeath();
         }
     }
 
@@ -74,6 +80,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerJump(float jumpForce)
     {
         _rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+        AudioManager.Instance.PlaySound(SoundType.Jump);
     }
 
 
@@ -88,6 +95,11 @@ public class PlayerController : MonoBehaviour
             OnPlayerGoUp?.Invoke(travaledRoad);
             _highestYPosition = transform.position.y;
         }
+    }
+
+    private void SetLowestYPosition()
+    {
+        _lowestYPosition = _platformManager.GetFirstSpawnedPlatform().transform.position.y;
     }
 
     /// <summary>
@@ -106,4 +118,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandlePlayerDeath()
+    {
+        SetLowestYPosition();
+        if (transform.position.y <= _lowestYPosition)
+        {
+            StartCoroutine(OnPlayerDeathMethod());
+        }
+    }
+
+    public IEnumerator OnPlayerDeathMethod()
+    {
+        _isPlayerDead = true;
+        _inputManager.enabled = false;
+        yield return new WaitForSecondsRealtime(_deathDelay);
+        AudioManager.Instance.PlaySound(SoundType.GameOver);
+        OnPlayerDeath?.Invoke();
+    }
 }

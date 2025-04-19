@@ -3,12 +3,14 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour
 {
     private float _jumpForce = 10f;
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         PlayerController player = collider.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
-            player.IsPlayerDead = true;
+            AudioManager.Instance.PlaySound(SoundType.PlayerDeathByEnemy);
+            StartCoroutine(player.OnPlayerDeathMethod());
         }
     }
 

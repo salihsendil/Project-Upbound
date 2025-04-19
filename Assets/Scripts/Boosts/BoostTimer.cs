@@ -3,22 +3,23 @@ using UnityEngine;
 
 public class BoostTimer : MonoBehaviour
 {
-    public event EventHandler OnTimerFinish;
+    public event Action<Sprite> OnTimerStarted;
+    public event Action<float> OnTimerChanged;
+    public event Action OnTimerFinish;
     [SerializeField] private float _timerDuration = 0;
-
-    public float TimerDuration { get => _timerDuration; }
 
     private void Update()
     {
         if (_timerDuration > 0)
         {
+            OnTimerChanged?.Invoke(_timerDuration);
             ReduceTime(Time.deltaTime);
         }
     }
 
     public void SetTimer(float duration)
     {
-        OnTimerFinish?.Invoke(this, EventArgs.Empty);
+        OnTimerFinish?.Invoke();
         _timerDuration = duration;
     }
 
@@ -29,7 +30,7 @@ public class BoostTimer : MonoBehaviour
         if (_timerDuration <= 0)
         {
             _timerDuration = 0;
-            OnTimerFinish?.Invoke(this, EventArgs.Empty);
+            OnTimerFinish?.Invoke();
         }
     }
 }

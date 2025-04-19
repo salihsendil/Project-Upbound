@@ -15,7 +15,6 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         _playerInput = new PlayerInput();
-        _playerInput.Enable();
     }
 
     private void Move(InputAction.CallbackContext callback)
@@ -26,6 +25,7 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
+        _playerInput.Enable();
         _playerInput.Player.Movement.started += Move;
         _playerInput.Player.Movement.performed += Move;
         _playerInput.Player.Movement.canceled += Move;
@@ -36,5 +36,6 @@ public class InputManager : MonoBehaviour
         _playerInput.Player.Movement.started -= Move;
         _playerInput.Player.Movement.performed -= Move;
         _playerInput.Player.Movement.canceled -= Move;
+        _playerInput.Disable();
     }
 }
