@@ -15,5 +15,6 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<UIManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<ScoreUI>().FromComponentInHierarchy().AsSingle();
         Container.Bind<PlatformManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<PlayerSettings>().FromComponentInHierarchy().AsSingle();
     }
 }

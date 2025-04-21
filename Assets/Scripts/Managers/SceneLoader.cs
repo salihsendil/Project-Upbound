@@ -3,7 +3,8 @@ using UnityEngine.SceneManagement;
 
 public enum SceneIndex {
     MainMenu,
-    GameScene
+    GameScene,
+    OptionsScene
 }
 
 public class SceneLoader : MonoBehaviour
@@ -15,8 +16,7 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadOptionsScene()
     {
-        //on the future
-        //add enum to SceneIndex
+        SceneManager.LoadScene((int)SceneIndex.OptionsScene);
     }
 
     public void LoadGameScene()

@@ -21,7 +21,6 @@ public class AudioManager : MonoBehaviour
 
     [Header("Settings")]
     private AudioSource _audioSource;
-    private float _audioLevel = 0.15f;
  
     [Header("Audio Clips")]
     [SerializeField] private SoundData[] _sounds;
@@ -43,7 +42,17 @@ public class AudioManager : MonoBehaviour
         #endregion
 
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = _audioLevel;
+        _audioSource.volume = PlayerSettings.DEFAULT_SFX_LEVEL;
+    }
+
+    private void OnEnable()
+    {
+        OptionsHandler.OnSFXLevelChanged += SetVolume;
+    }
+
+    private void OnDisable()
+    {
+        OptionsHandler.OnSFXLevelChanged -= SetVolume;
     }
 
     private void Start()
@@ -74,4 +83,10 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning($"AudioManager: {soundType} türünde ses bulunamadý!");
         }
     }
+
+    private void SetVolume(float volume)
+    {
+        _audioSource.volume = volume;
+    }
+
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class MusicPlayer : MonoBehaviour
 {
     private AudioSource _audioSource;
-    private float _volume = 0.1f;
     [SerializeField] private AudioClip[] _musics;
 
 
@@ -23,8 +22,17 @@ public class MusicPlayer : MonoBehaviour
         #endregion
 
         _audioSource = GetComponent<AudioSource>();
-        _audioSource.volume = _volume;
+        _audioSource.volume = PlayerSettings.DEFAULT_MUSIC_LEVEL;
         StartCoroutine(MusicLoop());
+    }
+    private void OnEnable()
+    {
+        OptionsHandler.OnMusicLevelChanged += SetVolume;
+    }
+
+    private void OnDisable()
+    {
+        OptionsHandler.OnMusicLevelChanged -= SetVolume;
     }
 
     private int GetRandomIndex()
@@ -47,6 +55,11 @@ public class MusicPlayer : MonoBehaviour
 
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    private void SetVolume(float volume)
+    {
+        _audioSource.volume = volume;
     }
 
 }
